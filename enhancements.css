@@ -429,3 +429,39 @@ button.dl-button {
  .brand-mark,.brand-mark:before{animation:none!important}
  .brand-mark,.brand:hover .brand-mark{transform:none;transition:none}
 }
+
+/* Download format labels must stay white in every state and browser. */
+.dl button[data-fmt],
+.dl button[data-fmt] *,
+.dl button[data-fmt]::before,
+.dl button[data-fmt]::after{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+}
+.dl button[data-fmt]{
+  background:#245eea !important;
+  border-color:#245eea !important;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif !important;
+  font-size:13px !important;
+  font-weight:750 !important;
+  letter-spacing:.025em !important;
+}
+.dl button[data-fmt]:not(:disabled):hover{
+  background:#174fcf !important;
+  border-color:#174fcf !important;
+}
+.dl button[data-fmt]:disabled{
+  background:#8aa9ed !important;
+  border-color:#8aa9ed !important;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  opacity:1 !important;
+}
+.dl button[data-fmt] span{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  font-size:15px !important;
+  font-weight:800 !important;
+}
