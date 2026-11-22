@@ -103,30 +103,30 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-inner">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="eyebrow-dot"></span> PROSTY SPOSÓB NA DOBRY QR</div>
-        <h1>Twój link.<br><span>Twój kod.</span><br>Bez końca.</h1>
-        <p class="hero-lead">Twórz eleganckie kody QR do Booksy, opinii Google i dowolnych stron. Bez abonamentu. Bez pośredników. Po prostu działa.</p>
+        <div class="eyebrow"><span class="eyebrow-dot"></span> GENERATOR KODÓW QR</div>
+        <h1>Kody QR,<br><span>które robią</span><br>swoje.</h1>
+        <p class="hero-lead">Przygotuj kod do strony, Booksy lub opinii Google. Pobierz plik i wykorzystaj go online albo w druku.</p>
         <div class="hero-actions"><a class="primary-link" href="#generator">Stwórz kod QR <span>↓</span></a><span class="hero-note"><i></i> Bez rejestracji i opłat</span></div>
       </div>
       <div class="hero-art" aria-label="Dekoracyjna kompozycja kodów QR">
         <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
-        <div class="art-card art-card-back"><span class="art-mini">QR / 02</span><div class="art-pattern pattern-a"></div><span class="art-caption">SCAN TO DISCOVER</span></div>
-        <div class="art-card art-card-front"><span class="art-mini">QR / 01</span><div class="art-pattern pattern-b"><i></i></div><span class="art-caption">MADE TO CONNECT</span></div>
-        <div class="art-chip"><span class="chip-dot"></span> STATIC BY DESIGN</div>
+        <div class="art-card art-card-back"><span class="art-mini">PRZYKŁAD 02</span><div class="art-pattern pattern-a" data-qr="https://example.com/rezerwacja"></div><span class="art-caption">REZERWACJA ONLINE</span></div>
+        <div class="art-card art-card-front"><span class="art-mini">PRZYKŁAD 01</span><div class="art-pattern pattern-b" data-qr="https://example.com/opinie"><i></i></div><span class="art-caption">OPINIE KLIENTÓW</span></div>
+        <div class="art-chip"><span class="chip-dot"></span> GOTOWE DO POBRANIA</div>
         <div class="art-spark">✳</div>
       </div>
     </div>
-    <div class="hero-bottom"><span>01 — GENERATOR KODÓW</span><span>MADE FOR EVERYDAY BUSINESS <b>✳</b></span></div>
+    <div class="hero-bottom"><span>01 — GENERATOR KODÓW</span><span>PROSTY GENERATOR. GOTOWY KOD. <b>✳</b></span></div>
   </section>
   <section class="generator-section" id="generator">
-    <div class="section-heading"><div><p class="section-kicker">TWORZENIE KODU</p><h2>Wszystko zaczyna się<br>od jednego linku.</h2></div><p class="section-description">Wklej adres, wybierz sposób działania i pobierz gotowy plik. Podgląd aktualizuje się na bieżąco.</p></div>
+    <div class="section-heading"><div><p class="section-kicker">TWORZENIE KODU</p><h2>Wklej adres.<br>Pobierz gotowy kod.</h2></div><p class="section-description">Wklej adres, wybierz sposób działania i pobierz gotowy plik. Podgląd aktualizuje się na bieżąco.</p></div>
     <div class="grid">
       <section class="panel" aria-label="Ustawienia kodu QR">
-        <div class="panel-topline"><span class="step-number">01</span><span class="panel-overline">USTAWIENIA</span><span class="live-pill"><i></i> NA ŻYWO</span></div>
+        <div class="panel-topline"><span class="step-number">01</span><span class="panel-overline">USTAWIENIA</span><span class="live-pill"><i></i> PODGLĄD</span></div>
         <div class="field">
           <label class="t" for="url">Dokąd ma prowadzić kod?</label>
-          <div class="input-wrap"><span class="input-icon">↗</span><input id="url" type="url" inputmode="url" autocomplete="off" placeholder="Wklej adres strony lub Place ID…"></div>
-          <div class="hint" id="detected">Rodzaj rozpoznam automatycznie.</div>
+          <div class="input-wrap"><span class="input-icon">↗</span><input id="url" type="url" inputmode="url" autocomplete="off" placeholder="Wklej link do strony lub profilu Google…"></div>
+          <div class="hint" id="detected">Wklej adres, a rozpoznam jego rodzaj.</div>
         </div>
         <div class="field">
           <span class="t">Wybierz rodzaj kodu</span>
@@ -145,9 +145,9 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
         </div>
       </section>
       <aside class="card" aria-label="Podgląd i pobieranie kodu">
-        <div class="preview-head"><div><span class="step-number">02</span><span class="panel-overline">TWÓJ KOD QR</span></div><span class="preview-live"><i></i> PODGLĄD</span></div>
+        <div class="preview-head"><div><span class="step-number">02</span><span class="panel-overline">TWÓJ KOD QR</span></div><span class="preview-live"><i></i> GOTOWY</span></div>
         <div class="label">
-          <div id="qrbox"><div class="empty">Twój kod pojawi się tutaj<br>po wklejeniu linku.</div></div>
+          <div id="qrbox"><div class="empty">Podgląd kodu pojawi się po wklejeniu adresu.</div></div>
           <div class="cap" id="cap"></div>
         </div>
         <div class="final" id="final"></div>
@@ -167,18 +167,18 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
           <button class="btn ghost" type="button" id="copy" disabled style="flex:1">Kopiuj link</button>
           <button class="btn ghost" type="button" id="save" disabled style="flex:1">Zapisz w historii</button>
         </div>
-        <p class="preview-foot"><span>⌁</span> Pliki gotowe do użycia i druku.</p>
+        <p class="preview-foot">Sprawdź kod przed wydrukiem.</p>
       </aside>
     </div>
   </section>
   <section class="trust-strip"><div><b>01</b><span>Bez abonamentu</span></div><div><b>02</b><span>Bez przekierowań</span></div><div><b>03</b><span>Pliki do druku</span></div><div><b>04</b><span>Bez rejestracji</span></div></section>
   <section class="qr-story" id="jak-dziala">
     <div class="qr-story-inner">
-      <div class="story-intro"><p class="section-kicker">MNIEJ KROKÓW. WIĘCEJ MOŻLIWOŚCI.</p><h2>Technologia, która<br>nie przeszkadza.</h2><p>Skup się na swojej pracy. My upraszczamy drogę od linku do gotowego kodu.</p></div>
+      <div class="story-intro"><p class="section-kicker">JAK TO DZIAŁA</p><h2>Od adresu<br>do gotowego kodu.</h2><p>Wklej adres, sprawdź podgląd i pobierz plik w wybranym formacie.</p></div>
       <div class="qr-feature-grid">
-        <article class="qr-feature"><div class="qr-feature-icon">↗</div><span class="feature-index">01 / DIRECT</span><h3>Bez pośredników</h3><p>Adres jest zapisany bezpośrednio w kodzie. Nie korzystamy z własnego skracacza ani serwera przekierowań.</p></article>
-        <article class="qr-feature"><div class="qr-feature-icon">∞</div><span class="feature-index">02 / FOREVER</span><h3>Bez daty ważności</h3><p>Statyczny kod QR nie wygasa i nie wymaga abonamentu. Działa, dopóki aktywny jest zapisany w nim adres.</p></article>
-        <article class="qr-feature"><div class="qr-feature-icon">▧</div><span class="feature-index">03 / PRINT READY</span><h3>Gotowy do druku</h3><p>Pobierz PNG, JPG lub SVG. Wybierz wysoką rozdzielczość albo wektor, który możesz skalować.</p></article>
+        <article class="qr-feature"><div class="qr-feature-icon">↗</div><span class="feature-index">01</span><h3>Bez pośredników</h3><p>Adres jest zapisany bezpośrednio w kodzie. Nie korzystamy z własnego skracacza ani serwera przekierowań.</p></article>
+        <article class="qr-feature"><div class="qr-feature-icon">∞</div><span class="feature-index">02</span><h3>Bez daty ważności</h3><p>Statyczny kod QR nie wygasa i nie wymaga abonamentu. Działa, dopóki aktywny jest zapisany w nim adres.</p></article>
+        <article class="qr-feature"><div class="qr-feature-icon">▧</div><span class="feature-index">03</span><h3>Gotowy do druku</h3><p>Pobierz PNG, JPG lub SVG. Wybierz wysoką rozdzielczość albo wektor, który możesz skalować.</p></article>
       </div>
       <div class="qr-faq"><div class="faq-heading"><p class="section-kicker">DOBRZE WIEDZIEĆ</p><h2>Masz pytania?<br>Mamy odpowiedzi.</h2></div>
         <details><summary>Czy kod QR naprawdę nie wygasa?</summary><p>Sam statyczny kod QR nie ma daty ważności i nie wymaga naszego serwera. Będzie działał tak długo, jak urządzenie odczyta kod, a zapisany w nim adres nadal będzie aktywny. Jeśli zmieni się lub wygaśnie strona docelowa, kod nadal zeskanuje się poprawnie, ale nie otworzy już właściwej treści.</p></details>
@@ -372,6 +372,7 @@ const store = {
 };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 let mode = 'auto', current = null, downloads = null, forceProfile = false;
+let resolvedGooglePlace = null;
 const LOGO_D = 'M4.06,61.44 4.00,62.12 4.12,62.62 4.62,63.19 5.38,63.50 12.81,63.62 13.56,63.50 14.12,63.25 14.75,62.75 16.25,60.31 17.62,58.69 19.19,57.19 20.44,56.31 21.94,55.62 24.56,54.94 26.56,54.88 27.88,55.06 29.62,55.50 31.44,56.12 34.88,57.88 41.44,62.31 47.75,67.00 48.75,67.88 53.62,71.31 57.56,73.69 61.50,75.56 66.06,77.19 70.12,78.06 73.81,78.38 76.75,78.38 80.94,78.00 84.19,77.25 86.50,76.50 88.31,75.75 90.62,74.50 91.88,73.69 95.12,71.12 95.88,70.38 98.75,66.75 99.81,64.94 100.88,62.75 101.75,60.44 102.50,57.69 103.00,52.25 102.94,49.12 102.50,44.81 102.00,43.19 101.75,41.88 100.81,39.25 99.62,36.81 98.81,35.44 96.56,32.25 93.56,29.19 90.38,26.88 87.44,25.38 84.88,24.50 82.38,23.88 78.56,23.44 76.00,23.44 73.19,23.81 70.81,24.44 68.75,25.19 66.31,26.44 64.31,27.62 63.50,27.69 63.25,27.56 62.75,26.88 62.56,25.94 62.56,6.88 62.38,5.75 62.12,5.25 61.50,4.62 60.62,4.25 59.56,4.12 54.88,4.19 54.19,4.44 53.56,5.06 53.25,5.88 53.19,6.75 53.19,48.62 53.50,49.75 54.38,50.75 56.75,52.50 58.81,53.81 60.56,54.75 61.44,54.81 61.75,54.69 62.25,54.19 62.56,53.19 62.56,47.69 63.19,44.62 64.06,42.50 64.94,40.94 67.19,37.94 68.31,36.88 70.38,35.38 72.56,34.25 74.25,33.69 76.81,33.31 78.44,33.25 80.62,33.50 82.06,33.81 83.31,34.25 85.19,35.19 87.69,37.00 89.06,38.38 90.62,40.44 91.56,42.00 92.81,45.06 93.38,47.50 93.56,49.12 93.56,52.69 93.44,54.12 92.62,57.75 91.81,59.62 90.50,61.69 88.06,64.19 86.38,65.56 84.62,66.62 82.06,67.75 79.81,68.38 76.31,68.75 71.88,68.38 70.38,68.06 66.94,67.06 64.19,65.94 61.69,64.69 56.69,61.62 51.81,58.19 41.19,50.00 38.56,48.38 36.06,47.12 32.88,46.06 30.06,45.56 27.25,45.31 25.69,45.38 22.12,45.81 19.25,46.56 17.62,47.12 15.81,47.94 12.44,49.88 10.81,51.25 8.94,53.12 7.31,55.06 5.31,58.38 4.44,60.25Z', LOGO_W = 107, LOGO_H = 82;
 
 const toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('on'), 2600); };
@@ -390,7 +391,7 @@ function googleReview(raw, u) {
   const r = raw.trim();
   const wr = id => 'https://search.google.com/local/writereview?placeid=' + id;
   if (isPlaceId(r)) return { url: wr(r), ok: true, how: 'Zbudowałem link do formularza opinii z Place ID.' };
-  if (!u) return { url: null, ok: false };
+  if (!u) return { url: null, ok: false, q: r, isShort: false };
   const h = u.hostname.toLowerCase();
   let full = u.href; try { full = decodeURIComponent(u.href); } catch {}
   if (/writereview/.test(u.pathname) && u.searchParams.get('placeid')) return { url: u.href, ok: true, how: 'To już jest bezpośredni link do formularza opinii.' };
@@ -428,21 +429,41 @@ function resolve() {
 function renderNote(r) {
   const box = $('#gnote');
   if (r.type !== 'google' || !r.raw.trim()) { box.innerHTML = ''; return; }
-  if (r.g.ok) { box.innerHTML = `<div class="note ok"><h3>Link do opinii gotowy</h3>${esc(r.g.how)} Zeskanuj kod telefonem przed wydrukiem i sprawdź, czy otwiera się właściwa firma.</div>`; return; }
-  const g = r.g;
+  if (r.g.ok) { box.innerHTML = `<div class="note ok"><h3>Link do opinii jest gotowy</h3>${esc(r.g.how)} Przed drukiem zeskanuj kod i sprawdź, czy prowadzi do właściwej firmy.</div>`; return; }
   const PF = 'https://developers.google.com/maps/documentation/places/web-service/place-id';
-  box.innerHTML = `<div class="note"><h3>Ten link otwiera tylko wizytówkę, nie formularz opinii</h3>
-    Linki share.google i linki z wyszukiwarki nie zawierają identyfikatora firmy, a bez niego nie da się zrobić linku do opinii. Panel nie może go pobrać sam, bo Google blokuje takie zapytania ze stron. Znajdziesz go w pół minuty:
-    <ol>
-      <li><a class="btn ghost" style="min-height:40px;padding:6px 14px" href="${PF}" target="_blank" rel="noopener">Otwórz wyszukiwarkę Place ID od Google</a></li>
-      <li>Przewiń do mapy i w polu nad nią wpisz nazwę firmy${g.q ? ` <button type="button" class="btn ghost" id="copyName" style="min-height:34px;padding:2px 10px;font-size:14px">kopiuj „${esc(g.q)}”</button>` : ''}. Wybierz ją z listy podpowiedzi.</li>
-      <li>Na mapie pojawi się dymek z napisem <b>Place ID: ChIJ…</b>. Skopiuj ten ciąg znaków i wklej go tutaj zamiast linku.</li>
-    </ol>
-    Panel zrobi z niego link <code>search.google.com/local/writereview?placeid=…</code>, który od razu otwiera okno z gwiazdkami i polem na opinię.<br><br>
-    Jeśli jesteś właścicielem profilu, możesz zamiast tego wkleić link z przycisku „Poproś o opinie” (wygląda jak <code>g.page/r/…</code>).<br><br>
-    <button type="button" class="btn ghost" id="forceBtn" style="min-height:40px;padding:6px 14px">${forceProfile ? 'Ukryj kod do wizytówki' : 'Mimo to zrób kod do wizytówki firmy'}</button></div>`;
-  const cn = $('#copyName');
-  if (cn) cn.onclick = async () => { try { await navigator.clipboard.writeText(g.q); toast('Skopiowano nazwę'); } catch { toast('Zaznacz nazwę ręcznie'); } };
+  const official = 'https://support.google.com/business/answer/16816815?hl=pl';
+  if (resolvedGooglePlace) {
+    const p = resolvedGooglePlace;
+    box.innerHTML = `<div class="note"><h3>Znaleziony profil</h3><p><b>${esc(p.name || 'Profil Google')}</b><br>${esc(p.address || '')}</p><p>Sprawdź, czy to właściwa firma. Dopiero po potwierdzeniu utworzę link do formularza opinii.</p><button type="button" class="btn acc" id="useGooglePlace">Użyj tego profilu</button> <button type="button" class="btn ghost" id="retryGoogleLookup">Szukaj ponownie</button></div>`;
+    $('#useGooglePlace').onclick = () => { $('#url').value = p.place_id; resolvedGooglePlace = null; forceProfile = false; mode = 'google'; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === 'google'))); update(); };
+    $('#retryGoogleLookup').onclick = () => { resolvedGooglePlace = null; renderNote(r); };
+    return;
+  }
+  box.innerHTML = `<div class="note"><h3>Znajdź bezpośredni link do opinii</h3>
+    <p>Wklejony adres prowadzi do profilu Google. Spróbuję rozpoznać firmę i znaleźć jej identyfikator miejsca, a następnie przygotować link otwierający formularz opinii.</p>
+    <button type="button" class="btn acc" id="resolveGoogleProfile">Znajdź profil i link do opinii</button>
+    <p class="hint">Wyszukiwanie korzysta z zewnętrznej usługi ZnajdzPlaceID. Przekazany zostanie wyłącznie wklejony adres lub nazwa miejsca.</p>
+    <details class="review-help"><summary>Wolisz użyć oficjalnego linku Google?</summary><p>W panelu firmy wybierz „Opinie” → „Poproś o opinie” i skopiuj wygenerowany link. Możesz też wkleić identyfikator Place ID.</p><a href="${official}" target="_blank" rel="noopener">Instrukcja Google</a> · <a href="${PF}" target="_blank" rel="noopener">Wyszukiwarka Place ID</a></details>
+    <div id="googleLookupStatus" role="status" aria-live="polite"></div>
+    <button type="button" class="btn ghost" id="forceBtn">${forceProfile ? 'Ukryj kod do wizytówki' : 'Zrób kod prowadzący do wizytówki'}</button></div>`;
+  $('#resolveGoogleProfile').onclick = async () => {
+    const btn = $('#resolveGoogleProfile'), status = $('#googleLookupStatus');
+    btn.disabled = true; btn.textContent = 'Szukam profilu…';
+    status.textContent = 'Sprawdzam adres w katalogu miejsc Google.';
+    try {
+      const endpoint = 'https://znajdzplaceid.pl/api/search?query=' + encodeURIComponent(r.raw.trim());
+      const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('Usługa wyszukiwania zwróciła błąd (' + response.status + ').');
+      const payload = await response.json();
+      const d = payload && payload.data;
+      if (!payload.success || !d || !d.place_id) throw new Error((payload.error && payload.error.message) || 'Nie znaleziono jednoznacznego profilu.');
+      resolvedGooglePlace = { place_id: d.place_id, name: d.name || '', address: d.address || '', alternatives: d.alternatives || [] };
+      renderNote(r);
+    } catch (error) {
+      status.textContent = 'Nie udało się automatycznie znaleźć profilu. ' + (error && error.message ? error.message : 'Sprawdź połączenie i spróbuj ponownie.') + ' Możesz wkleić oficjalny link „Poproś o opinie” albo Place ID.';
+      btn.disabled = false; btn.textContent = 'Spróbuj ponownie';
+    }
+  };
   $('#forceBtn').onclick = () => { forceProfile = !forceProfile; update(); };
 }
 
@@ -563,7 +584,7 @@ $('#hist').addEventListener('click', e => {
 
 function setMode(m) { mode = m; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m))); update(); }
 document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
-$('#url').addEventListener('input', () => { forceProfile = false; update(); });
+$('#url').addEventListener('input', () => { forceProfile = false; resolvedGooglePlace = null; update(); });
 $('#name').addEventListener('input', update);
 
 renderHist();
