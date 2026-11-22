@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Generator kodów QR</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/enhancements.css">
 <style>
 :root{color-scheme:light;--bg:#ffffff;--alt:#f5f5f7;--card:#ffffff;--ink:#1d1d1f;--txt:#1d1d1f;--mut:#6e6e73;--line:#d2d2d7;--soft:#f5f5f7;--blue:#0071e3;--blueH:#0077ed;--link:#0066cc;--yel:#fff8e6;--yelT:#8a5a00;--grn:#eef8f0;--grnT:#1d7a3a;--red:#ffecec;--redT:#b3261e}
 *{box-sizing:border-box;min-width:0}
@@ -90,12 +91,12 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
 </style>
 </head>
 <body>
-<nav class="nav"><div><b>Kody QR</b><a href="#historia">Historia</a></div></nav>
+<nav class="nav"><div><b>Kody QR</b><a href="#jak-dziala">Jak to działa</a><a href="#historia">Historia</a></div></nav>
 <main class="band"><div class="wrap">
   <header class="hero">
   <p class="eyebrow rv">Booksy · Opinie Google · Dowolny link</p>
   <h1 class="rv" style="--i:1">Kod QR. Na zawsze.</h1>
-  <p class="lead rv" style="--i:2">Wklej link, pobierz kod. Bez pośredników, więc nie wygasa. Booksy dostaje logo w środku, a Google od razu otwiera okno opinii.</p>
+  <p class="lead rv" style="--i:2">Wklej link i pobierz gotowy kod. Bez pośrednich przekierowań i abonamentu. Kod sam nie wygasa — działa tak długo, jak aktywny pozostaje adres, który zapiszesz w jego środku.</p>
   </header>
 
   <div class="grid">
@@ -341,7 +342,7 @@ function parseUrl(s) {
   let t = s.trim();
   if (!t) return null;
   if (!/^[a-z][a-z0-9+.-]*:/i.test(t) && /^[^\s]+\.[a-z]{2,}(\/|$)/i.test(t)) t = 'https://' + t;
-  try { return new URL(t); } catch { return null; }
+  try { const u = new URL(t); return (u.protocol === 'https:' || u.protocol === 'http:') ? u : null; } catch { return null; }
 }
 const isPlaceId = s => /^(ChIJ|GhIJ|EiI|Ei[A-Za-z])[A-Za-z0-9_-]{10,}$/.test(s.trim());
 const isBooksy = u => u && /(^|\.)booksy\.[a-z.]+$/i.test(u.hostname);
@@ -532,5 +533,6 @@ update();
 if (window.claude && window.claude.use) window.claude.use('downloads').then(d => { downloads = d; }).catch(() => {});
 }
 </script>
+<script src="/enhancements.js" defer></script>
 </body>
 </html>
