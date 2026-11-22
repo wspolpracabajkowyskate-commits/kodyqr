@@ -262,3 +262,6 @@ select{min-height:39px;padding:5px 9px;border:1px solid #e8ebf1;border-radius:10
 @keyframes advanced-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 
 @media(max-width:600px){.nav .nav-links a[href="#jak-dziala"]{display:none}.nav .nav-links{gap:12px}}
+
+.nav .nav-inner>.nav-cta{color:#fff!important;white-space:nowrap;flex:0 0 auto;min-width:max-content}.nav .nav-inner>.nav-cta span{color:#b7cbff}
+@media(max-width:760px){.nav .nav-inner>.nav-cta{display:none!important}}
