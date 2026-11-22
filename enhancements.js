@@ -8,7 +8,9 @@
       const n = qr.size, quiet = 4, size = n + quiet * 2;
       let path = '';
       for (let y=0;y<n;y++) for (let x=0;x<n;x++) if(qr.modules[y][x]) path += `M${x+quiet},${y+quiet}h1v1h-1z`;
-      node.innerHTML = `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="Przykładowy kod QR"><rect width="${size}" height="${size}" fill="#fff"/><path d="${path}" fill="#15191f"/></svg>`;
+      const isBlue = node.classList.contains('pattern-a');
+            const paint = isBlue ? '<defs><linearGradient id="hero-qr-blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4f8cff"/><stop offset="52%" stop-color="#2868e8"/><stop offset="100%" stop-color="#1749b8"/></linearGradient></defs>' : '';
+            node.innerHTML = `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="Przykładowy kod QR"><rect width="${size}" height="${size}" fill="#fff"/>${paint}<path d="${path}" fill="${isBlue ? 'url(#hero-qr-blue)' : '#15191f'}"/></svg>`;
     } catch (_) { node.textContent = ''; }
   });
   const card = document.querySelector('.card');
