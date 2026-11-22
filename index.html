@@ -91,66 +91,104 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
 <link rel="stylesheet" href="/enhancements.css">
 </head>
 <body>
-<nav class="nav"><div><b>Kody QR</b><a href="#jak-dziala">Jak to działa</a><a href="#historia">Historia</a></div></nav>
-<main class="band"><div class="wrap">
-  <header class="hero">
-  <p class="eyebrow rv">Booksy · Opinie Google · Dowolny link</p>
-  <h1 class="rv" style="--i:1">Kod QR. Na zawsze.</h1>
-  <p class="lead rv" style="--i:2">Wklej link i pobierz gotowy kod. Bez pośrednich przekierowań i abonamentu. Kod sam nie wygasa — działa tak długo, jak aktywny pozostaje adres, który zapiszesz w jego środku.</p>
-  </header>
-
-  <div class="grid">
-    <section class="panel rv" style="--i:3">
-      <div class="field">
-        <label class="t" for="url">Link</label>
-        <input id="url" type="url" inputmode="url" autocomplete="off" placeholder="https://… albo Place ID z Google (ChIJ…)">
-        <div class="hint" id="detected">Rodzaj rozpoznam automatycznie.</div>
-      </div>
-
-      <div class="field">
-        <span class="t">Rodzaj kodu</span>
-        <div class="seg" role="group" aria-label="Rodzaj kodu">
-          <button type="button" data-mode="auto" aria-pressed="true">Automatycznie</button>
-          <button type="button" data-mode="plain" aria-pressed="false">Zwykły</button>
-          <button type="button" data-mode="booksy" aria-pressed="false">Booksy</button>
-          <button type="button" data-mode="google" aria-pressed="false">Opinia Google</button>
-        </div>
-      </div>
-
-      <div id="gnote"></div>
-
-      <div class="field">
-        <label class="t" for="name">Podpis pod kodem (opcjonalnie)</label>
-        <input id="name" type="text" maxlength="60" placeholder="np. Umów wizytę">
-        <div class="hint">Podpis widać tylko w podglądzie i w nazwie pliku, nie trafia do kodu.</div>
-      </div>
-    </section>
-
-    <aside class="card rv" style="--i:4" aria-label="Podgląd kodu">
-      <div class="label">
-        <div id="qrbox"><div class="empty">Tu pojawi się kod po wklejeniu linku.</div></div>
-        <div class="cap" id="cap"></div>
-      </div>
-      <div class="final" id="final"></div>
-      <div class="size">
-        <label for="px">Rozmiar PNG/JPG</label>
-        <select id="px"><option value="600">600 px</option><option value="1200" selected>1200 px</option><option value="2400">2400 px (druk)</option></select>
-        <label for="bg">Tło</label>
-        <select id="bg"><option value="white">białe</option><option value="none">bez tła (PNG, SVG)</option></select>
-      </div>
-      <div class="dl">
-        <button class="btn acc" type="button" data-fmt="png" disabled>PNG</button>
-        <button class="btn" type="button" data-fmt="jpg" disabled>JPG</button>
-        <button class="btn" type="button" data-fmt="svg" disabled>SVG</button>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn ghost" type="button" id="copy" disabled style="flex:1">Kopiuj link z kodu</button>
-        <button class="btn ghost" type="button" id="save" disabled style="flex:1">Zapisz w historii</button>
-      </div>
-    </aside>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#" aria-label="Kody QR — strona główna"><span class="brand-mark">⌁</span><span>Kody<span class="brand-light">QR</span></span></a>
+    <div class="nav-links"><a href="#generator">Generator</a><a href="#jak-dziala">Jak to działa</a><a href="#historia">Historia</a></div>
+    <a class="nav-cta" href="#generator">Utwórz kod <span>↗</span></a>
   </div>
-</div></main>
-
+</nav>
+<main>
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> PROSTY SPOSÓB NA DOBRY QR</div>
+        <h1>Twój link.<br><span>Twój kod.</span><br>Bez końca.</h1>
+        <p class="hero-lead">Twórz eleganckie kody QR do Booksy, opinii Google i dowolnych stron. Bez abonamentu. Bez pośredników. Po prostu działa.</p>
+        <div class="hero-actions"><a class="primary-link" href="#generator">Stwórz kod QR <span>↓</span></a><span class="hero-note"><i></i> Bez rejestracji i opłat</span></div>
+      </div>
+      <div class="hero-art" aria-label="Dekoracyjna kompozycja kodów QR">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-card art-card-back"><span class="art-mini">QR / 02</span><div class="art-pattern pattern-a"></div><span class="art-caption">SCAN TO DISCOVER</span></div>
+        <div class="art-card art-card-front"><span class="art-mini">QR / 01</span><div class="art-pattern pattern-b"><i></i></div><span class="art-caption">MADE TO CONNECT</span></div>
+        <div class="art-chip"><span class="chip-dot"></span> STATIC BY DESIGN</div>
+        <div class="art-spark">✳</div>
+      </div>
+    </div>
+    <div class="hero-bottom"><span>01 — GENERATOR KODÓW</span><span>MADE FOR EVERYDAY BUSINESS <b>✳</b></span></div>
+  </section>
+  <section class="generator-section" id="generator">
+    <div class="section-heading"><div><p class="section-kicker">TWORZENIE KODU</p><h2>Wszystko zaczyna się<br>od jednego linku.</h2></div><p class="section-description">Wklej adres, wybierz sposób działania i pobierz gotowy plik. Podgląd aktualizuje się na bieżąco.</p></div>
+    <div class="grid">
+      <section class="panel" aria-label="Ustawienia kodu QR">
+        <div class="panel-topline"><span class="step-number">01</span><span class="panel-overline">USTAWIENIA</span><span class="live-pill"><i></i> NA ŻYWO</span></div>
+        <div class="field">
+          <label class="t" for="url">Dokąd ma prowadzić kod?</label>
+          <div class="input-wrap"><span class="input-icon">↗</span><input id="url" type="url" inputmode="url" autocomplete="off" placeholder="Wklej adres strony lub Place ID…"></div>
+          <div class="hint" id="detected">Rodzaj rozpoznam automatycznie.</div>
+        </div>
+        <div class="field">
+          <span class="t">Wybierz rodzaj kodu</span>
+          <div class="seg" role="group" aria-label="Rodzaj kodu">
+            <button type="button" data-mode="auto" aria-pressed="true">Auto</button>
+            <button type="button" data-mode="plain" aria-pressed="false">Zwykły link</button>
+            <button type="button" data-mode="booksy" aria-pressed="false">Booksy</button>
+            <button type="button" data-mode="google" aria-pressed="false">Opinie Google</button>
+          </div>
+        </div>
+        <div id="gnote"></div>
+        <div class="field field-last">
+          <label class="t" for="name">Dodaj podpis <span class="optional">OPCJONALNIE</span></label>
+          <input id="name" type="text" maxlength="60" placeholder="np. Umów wizytę online">
+          <div class="hint">Podpis pojawi się w nazwie pobranego pliku i podglądzie.</div>
+        </div>
+      </section>
+      <aside class="card" aria-label="Podgląd i pobieranie kodu">
+        <div class="preview-head"><div><span class="step-number">02</span><span class="panel-overline">TWÓJ KOD QR</span></div><span class="preview-live"><i></i> PODGLĄD</span></div>
+        <div class="label">
+          <div id="qrbox"><div class="empty">Twój kod pojawi się tutaj<br>po wklejeniu linku.</div></div>
+          <div class="cap" id="cap"></div>
+        </div>
+        <div class="final" id="final"></div>
+        <div class="export-title">DOPASUJ EKSPORT</div>
+        <div class="size">
+          <label for="px">Rozmiar</label>
+          <select id="px"><option value="600">600 px · Web</option><option value="1200" selected>1200 px · HD</option><option value="2400">2400 px · Druk</option></select>
+          <label for="bg">Tło</label>
+          <select id="bg"><option value="white">Białe</option><option value="none">Przezroczyste</option></select>
+        </div>
+        <div class="dl">
+          <button class="btn acc" type="button" data-fmt="png" disabled>PNG <span>↓</span></button>
+          <button class="btn" type="button" data-fmt="jpg" disabled>JPG <span>↓</span></button>
+          <button class="btn" type="button" data-fmt="svg" disabled>SVG <span>↓</span></button>
+        </div>
+        <div class="row preview-tools">
+          <button class="btn ghost" type="button" id="copy" disabled style="flex:1">Kopiuj link</button>
+          <button class="btn ghost" type="button" id="save" disabled style="flex:1">Zapisz w historii</button>
+        </div>
+        <p class="preview-foot"><span>⌁</span> Pliki gotowe do użycia i druku.</p>
+      </aside>
+    </div>
+  </section>
+  <section class="trust-strip"><div><b>01</b><span>Bez abonamentu</span></div><div><b>02</b><span>Bez przekierowań</span></div><div><b>03</b><span>Pliki do druku</span></div><div><b>04</b><span>Bez rejestracji</span></div></section>
+  <section class="qr-story" id="jak-dziala">
+    <div class="qr-story-inner">
+      <div class="story-intro"><p class="section-kicker">MNIEJ KROKÓW. WIĘCEJ MOŻLIWOŚCI.</p><h2>Technologia, która<br>nie przeszkadza.</h2><p>Skup się na swojej pracy. My upraszczamy drogę od linku do gotowego kodu.</p></div>
+      <div class="qr-feature-grid">
+        <article class="qr-feature"><div class="qr-feature-icon">↗</div><span class="feature-index">01 / DIRECT</span><h3>Bez pośredników</h3><p>Adres jest zapisany bezpośrednio w kodzie. Nie korzystamy z własnego skracacza ani serwera przekierowań.</p></article>
+        <article class="qr-feature"><div class="qr-feature-icon">∞</div><span class="feature-index">02 / FOREVER</span><h3>Bez daty ważności</h3><p>Statyczny kod QR nie wygasa i nie wymaga abonamentu. Działa, dopóki aktywny jest zapisany w nim adres.</p></article>
+        <article class="qr-feature"><div class="qr-feature-icon">▧</div><span class="feature-index">03 / PRINT READY</span><h3>Gotowy do druku</h3><p>Pobierz PNG, JPG lub SVG. Wybierz wysoką rozdzielczość albo wektor, który możesz skalować.</p></article>
+      </div>
+      <div class="qr-faq"><div class="faq-heading"><p class="section-kicker">DOBRZE WIEDZIEĆ</p><h2>Masz pytania?<br>Mamy odpowiedzi.</h2></div>
+        <details><summary>Czy kod QR naprawdę nie wygasa?</summary><p>Sam statyczny kod QR nie ma daty ważności i nie wymaga naszego serwera. Będzie działał tak długo, jak urządzenie odczyta kod, a zapisany w nim adres nadal będzie aktywny. Jeśli zmieni się lub wygaśnie strona docelowa, kod nadal zeskanuje się poprawnie, ale nie otworzy już właściwej treści.</p></details>
+        <details><summary>Czy mogę zmienić adres po wydrukowaniu kodu?</summary><p>Nie. W statycznym kodzie adres jest zapisany bezpośrednio w jego strukturze. Po zmianie adresu trzeba wygenerować i wydrukować nowy kod.</p></details>
+        <details><summary>Czy historia kodów jest dostępna na każdym urządzeniu?</summary><p>Nie. Historia jest zapisywana lokalnie w pamięci tej przeglądarki. Nie synchronizuje się automatycznie między urządzeniami.</p></details>
+        <details><summary>Jaki format wybrać do druku?</summary><p>Najczęściej wybierz SVG — to grafika wektorowa, którą można skalować bez utraty ostrości. PNG 2400 px również sprawdzi się w wielu projektach drukowanych. Zawsze zeskanuj próbny wydruk przed produkcją.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
 <section class="band hist" id="historia" style="padding-top:0"><div class="wrap">
   <h2>Historia</h2>
   <ul id="hist"></ul>
