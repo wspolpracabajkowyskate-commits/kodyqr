@@ -77,6 +77,8 @@ module.exports = async function handler(req, res) {
   if (id) return res.status(200).json({success:true,data:{place_id:id,name:'',address:'',alternatives:[],source:'direct_place_id',review_url:reviewUrl(id)}});
 
   let parsed;
+  let originalShortLink = '';
+  let expandedShortLink = '';
   try { parsed = new URL(query); } catch (_) {}
   if (parsed) {
     const host = parsed.hostname.toLowerCase();
@@ -90,18 +92,47 @@ module.exports = async function handler(req, res) {
     if (host === 'search.google.com' && /local\/writereview/.test(parsed.pathname) && parsed.searchParams.get('placeid')) {
       return res.status(200).json({success:true,data:{place_id:parsed.searchParams.get('placeid'),name:'',address:'',alternatives:[],source:'official_review_link',review_url:query}});
     }
-    // Expand short Google Maps URLs once; some shorteners block server-side requests,
-    // so retain the original URL for the universal resolver fallback below.
-    if (/^(maps\.app\.goo\.gl|goo\.gl|g\.co)$/.test(host)) {
+    // Google now shares Business Profiles through share.google short links too.
+    // Resolve only known Google short-link hosts and retain both URLs for fallbacks.
+    if (/^(maps\.app\.goo\.gl|goo\.gl|g\.co|share\.google)$/.test(host)) {
+      originalShortLink = query;
       try {
-        const expanded = await fetch(query, {redirect:'follow',signal:AbortSignal.timeout(7000),headers:{'User-Agent':'Mozilla/5.0 KodyQR'}});
+        const expanded = await fetch(query, {
+          redirect:'follow',
+          signal:AbortSignal.timeout(9000),
+          headers:{'User-Agent':'Mozilla/5.0 (compatible; KodyQR/2.0)','Accept':'text/html,application/xhtml+xml'}
+        });
         if (expanded.url && expanded.url !== query) {
-          const expandedId = extractPlaceId(expanded.url);
-          if (expandedId) return res.status(200).json({success:true,data:{place_id:expandedId,name:'',address:'',alternatives:[],source:'expanded_maps_link',review_url:reviewUrl(expandedId)}});
-          query = expanded.url;
-          parsed = new URL(query);
+          const finalUrl = new URL(expanded.url);
+          const finalHost = finalUrl.hostname.toLowerCase();
+          // Never treat a redirect to an unrelated domain as a Google profile.
+          if (finalHost === 'google.com' || finalHost.endsWith('.google.com') || finalHost === 'googleusercontent.com' || finalHost.endsWith('.googleusercontent.com')) {
+            expandedShortLink = expanded.url;
+            const expandedId = extractPlaceId(expanded.url);
+            if (expandedId) return res.status(200).json({success:true,data:{place_id:expandedId,name:'',address:'',alternatives:[],source:'expanded_google_share_link',review_url:reviewUrl(expandedId)}});
+            const q = finalUrl.searchParams.get('q') || finalUrl.searchParams.get('query') || finalUrl.searchParams.get('query_place_id') || '';
+            if (q && !/^https?:\/\//i.test(q)) query = q;
+            else query = expanded.url;
+            parsed = finalUrl;
+            // Some Google share links lead to a search result page containing a Maps URL.
+            try {
+              const page = await expanded.text();
+              const decodedPage = decodeUrl(page.replace(/\\u003d/g,'=').replace(/\\u0026/g,'&').replace(/&amp;/g,'&'));
+              const pageId = extractPlaceId(decodedPage);
+              if (pageId) return res.status(200).json({success:true,data:{place_id:pageId,name:'',address:'',alternatives:[],source:'expanded_google_share_page',review_url:reviewUrl(pageId)}});
+              const mapsLink = decodedPage.match(/https?:\\?\/\\?\/(?:www\\?\.)?google\\?\.com\\?\/maps\\?\/[^"'<>\\s]+/i);
+              if (mapsLink) {
+                const cleanMapsLink = mapsLink[0].replace(/\\\\/g,'').replace(/\\u0026/g,'&');
+                const mapsId = extractPlaceId(cleanMapsLink);
+                if (mapsId) return res.status(200).json({success:true,data:{place_id:mapsId,name:'',address:'',alternatives:[],source:'expanded_google_share_page',review_url:reviewUrl(mapsId)}});
+                query = cleanMapsLink;
+              }
+            } catch (_) {}
+          }
         }
-      } catch (_) {}
+      } catch (_) {
+        // Google may block server-side expansion; try the universal resolver with the original URL.
+      }
     }
     const mapQuery = searchTextFromUrl(query);
     if (mapQuery) query = mapQuery;
@@ -132,6 +163,10 @@ module.exports = async function handler(req, res) {
 
   // Secondary resolver: name search first, universal URL resolver second.
   const attempts = [
+    ...(originalShortLink ? [
+      {path:'/api/all',key:'url',value:originalShortLink},
+      ...(expandedShortLink ? [{path:'/api/all',key:'url',value:expandedShortLink}] : [])
+    ] : []),
     {path:'/api/search',key:'query',value:query},
     {path:'/api/all',key:'url',value:query}
   ];
