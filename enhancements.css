@@ -548,3 +548,98 @@ button.dl-button {
 @media(max-width:700px){
  .hero h1{font-size:clamp(48px,11.5vw,68px)!important;line-height:1.04!important}
 }
+
+
+/* Generator-first layout: the tool is the first thing visitors see. */
+.generator-section{
+  min-height:calc(100vh - 66px);
+  padding:clamp(30px,4vw,54px) 24px 56px !important;
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(55,119,255,.075),transparent 42%),
+    linear-gradient(180deg,#f8faff 0%,#f4f7fc 100%) !important;
+}
+.generator-heading{
+  align-items:center;
+  margin-bottom:26px !important;
+  gap:28px;
+}
+.generator-heading .section-kicker{
+  margin-bottom:10px;
+  color:#2868e8;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+.generator-heading h1{
+  margin:0;
+  color:#101827;
+  font-size:clamp(34px,4.1vw,52px);
+  line-height:1.04;
+  font-weight:760;
+  letter-spacing:-.055em;
+}
+.generator-heading .section-description{
+  max-width:420px;
+  color:#4c5b72;
+  font-size:15px;
+  line-height:1.6;
+}
+.generator-section .panel,
+.generator-section .card{
+  border:1.5px solid #cbdcff !important;
+  box-shadow:0 16px 46px -32px rgba(35,91,190,.28),0 0 0 3px rgba(66,124,239,.045) !important;
+}
+.generator-section .panel{
+  background:linear-gradient(160deg,#fff 0%,#fbfdff 100%) !important;
+}
+.generator-section .card{
+  background:linear-gradient(155deg,#fff 0%,#f8fbff 100%) !important;
+}
+.generator-section .input-wrap input,
+.generator-section input[type=text],
+.generator-section input[type=url]{
+  border:1.5px solid #c7d8f7 !important;
+  background:#fbfdff !important;
+  color:#111827 !important;
+}
+.generator-section .input-wrap input:focus,
+.generator-section input[type=text]:focus,
+.generator-section input[type=url]:focus{
+  border-color:#3978f6 !important;
+  box-shadow:0 0 0 4px rgba(57,120,246,.14) !important;
+  background:#fff !important;
+}
+.generator-section .seg{
+  border:1.5px solid #d5e2fa !important;
+  background:#f1f6ff !important;
+}
+.generator-section .seg button{
+  color:#4d5d75 !important;
+  font-weight:650 !important;
+}
+.generator-section .seg button[aria-pressed=true]{
+  color:#174fbf !important;
+  background:#fff !important;
+  box-shadow:0 2px 9px rgba(30,83,177,.13),0 0 0 1px #a9c6ff !important;
+}
+.generator-section .step-number{
+  background:#e8f0ff !important;
+  color:#1e5ed5 !important;
+}
+.generator-section .label{
+  border:1.5px solid #d4e1f8 !important;
+  box-shadow:0 12px 34px -25px rgba(35,91,190,.28) !important;
+}
+.generator-section .dl .btn{
+  border:1.5px solid #b9cdf5 !important;
+}
+.generator-section .dl .btn.acc{
+  background:#245eea !important;
+  border-color:#245eea !important;
+}
+@media(max-width:700px){
+ .generator-section{padding:28px 15px 42px!important;min-height:0}
+ .generator-heading{display:block;margin-bottom:20px!important}
+ .generator-heading h1{font-size:36px}
+ .generator-heading .section-description{margin-top:10px;font-size:14px}
+}
