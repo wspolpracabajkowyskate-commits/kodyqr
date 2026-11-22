@@ -535,7 +535,8 @@ function rasterBlob(b, px, type) {
   c.width = c.height = b.N * scale;
   const g = c.getContext('2d');
   const noBg = type === 'image/png' && $('#bg').value === 'none';
-  if (!noBg) { g.fillStyle = b.bg; g.fillRect(0, 0, c.width, c.height); }
+  const rasterBg = $('#bg').value === 'none' && type === 'image/jpeg' ? '#ffffff' : b.bg;
+  if (!noBg) { g.fillStyle = rasterBg; g.fillRect(0, 0, c.width, c.height); }
   g.fillStyle = b.fg;
   for (let y = 0; y < b.n; y++) for (let x = 0; x < b.n; x++) if (b.qr.modules[y][x] && !b.inHole(x, y)) g.fillRect((x + b.q) * scale, (y + b.q) * scale, scale, scale);
   if (b.withLogo) {
