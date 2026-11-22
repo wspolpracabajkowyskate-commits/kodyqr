@@ -115,17 +115,17 @@ module.exports = async function handler(req, res) {
     try {
       const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
         method:'POST',
-        headers:{'Content-Type':'application/json','X-Goog-Api-Key':googleKey,'X-Goog-FieldMask':'places.id,places.displayName,places.formattedAddress'},
+        headers:{'Content-Type':'application/json','X-Goog-Api-Key':googleKey,'X-Goog-FieldMask':'places.id,places.displayName,places.formattedAddress,places.googleMapsLinks.writeAReviewUri'},
         body:JSON.stringify({textQuery:query,languageCode:'pl',regionCode:'PL'}),
         signal:AbortSignal.timeout(9000)
       });
       const payload = await response.json();
       const places = Array.isArray(payload.places) ? payload.places : [];
-      const candidates = places.map(p=>({place_id:p.id,name:p.displayName && p.displayName.text || '',address:p.formattedAddress || '',source:'google_places'})).filter(p=>isPlaceId(p.place_id));
+      const candidates = places.map(p=>({place_id:p.id,name:p.displayName && p.displayName.text || '',address:p.formattedAddress || '',review_url:p.googleMapsLinks && p.googleMapsLinks.writeAReviewUri || '',source:'google_places'})).filter(p=>isPlaceId(p.place_id));
       if (candidates.length) {
         const city = requestedCity(query);
         const sorted = city ? candidates.sort((a,b)=>Number(normalizeText(b.address).includes(normalizeText(city)))-Number(normalizeText(a.address).includes(normalizeText(city)))) : candidates;
-        return res.status(200).json({success:true,data:{...sorted[0],alternatives:sorted.slice(1,5),review_url:reviewUrl(sorted[0].place_id)}});
+        return res.status(200).json({success:true,data:{...sorted[0],alternatives:sorted.slice(1,5),review_url:sorted[0].review_url || reviewUrl(sorted[0].place_id)}});
       }
     } catch (_) { /* use secondary resolver below */ }
   }
