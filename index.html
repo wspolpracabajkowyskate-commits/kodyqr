@@ -104,8 +104,8 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="eyebrow"><span class="eyebrow-dot"></span> GENERATOR KODÓW QR</div>
-        <h1>Kody QR,<br><span>które robią</span><br>swoje.</h1>
-        <p class="hero-lead">Przygotuj kod do strony, Booksy lub opinii Google. Pobierz plik i wykorzystaj go online albo w druku.</p>
+        <h1>Kod QR do<br><span>Twojej</span><br>firmy.</h1>
+        <p class="hero-lead">Wklej adres strony, profilu Booksy lub wizytówki Google. Pobierz kod i wykorzystaj go online albo w druku.</p>
         <div class="hero-actions"><a class="primary-link" href="#generator">Stwórz kod QR <span>↓</span></a><span class="hero-note"><i></i> Bez rejestracji i opłat</span></div>
       </div>
       <div class="hero-art" aria-label="Dekoracyjna kompozycja kodów QR">
@@ -385,7 +385,7 @@ function parseUrl(s) {
 }
 const isPlaceId = s => /^(ChIJ|GhIJ|EiI|Ei[A-Za-z])[A-Za-z0-9_-]{10,}$/.test(s.trim());
 const isBooksy = u => u && /(^|\.)booksy\.[a-z.]+$/i.test(u.hostname);
-const isGoogle = (u, raw) => isPlaceId(raw) || (u && /(^|\.)(google\.[a-z.]+|g\.page|share\.google|goo\.gl|maps\.app\.goo\.gl)$/i.test(u.hostname));
+const isGoogle = (u, raw) => isPlaceId(raw) || (u && /(^|\.)(google\.[a-z.]+|g\.page|g\.co|share\.google|goo\.gl|maps\.app\.goo\.gl)$/i.test(u.hostname));
 
 function googleReview(raw, u) {
   const r = raw.trim();
