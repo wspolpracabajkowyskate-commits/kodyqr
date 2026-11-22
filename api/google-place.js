@@ -149,16 +149,31 @@ module.exports = async function handler(req, res) {
       }
       const root = payload && (payload.data || payload.result || payload);
       const candidatesRaw = root && (root.alternatives || root.results || root.places);
-      const first = normalizePlace(root) || normalizePlace(Array.isArray(candidatesRaw) ? candidatesRaw[0] : null);
-      if (!first) {
+      const allCandidates = [normalizePlace(root), ...(Array.isArray(candidatesRaw) ? candidatesRaw.map(normalizePlace) : [])]
+        .filter((p,i,arr)=>p && arr.findIndex(x=>x && x.place_id===p.place_id)===i);
+      if (!allCandidates.length) {
         lastDetail = payload && payload.error && payload.error.message || 'Resolver did not return a Place ID.';
         continue;
       }
-      const alternatives = (Array.isArray(candidatesRaw) ? candidatesRaw : (Array.isArray(root.alternatives) ? root.alternatives : []))
-        .map(normalizePlace).filter(p=>p && p.place_id !== first.place_id).slice(0,5);
+      const requestedName = clean(query).split(',')[0].replace(/^https?:\\/\\//i,'').trim();
+      const ignored = new Set(['firma','company','salon','sklep','restauracja','restaurant','hotel','gabinet','uslugi','usługi','the','google','maps']);
+      const nameTokens = normalizeText(requestedName).split(/[^a-z0-9]+/).filter(t=>t.length>1 && !ignored.has(t));
       const city = requestedCity(query);
-      const locationMatched = !city || normalizeText(first.address).includes(normalizeText(city));
-      return res.status(200).json({success:true,data:{...first,alternatives,location_matched:locationMatched,review_url:reviewUrl(first.place_id)}});
+      const ranked = allCandidates.map(p=>{
+        const candidate = normalizeText(p.name);
+        const matchedTokens = nameTokens.filter(t=>candidate.includes(t));
+        const nameScore = nameTokens.length ? matchedTokens.length/nameTokens.length : 1;
+        const locationMatched = !city || normalizeText(p.address).includes(normalizeText(city));
+        return {...p,name_score:nameScore,location_matched:locationMatched};
+      }).filter(p=>!nameTokens.length || p.name_score>0)
+        .sort((a,b)=>(b.name_score-a.name_score) || (Number(b.location_matched)-Number(a.location_matched)));
+      if (!ranked.length) {
+        lastDetail = 'Wynik wyszukiwania nie pasuje nazwą do zapytania.';
+        continue;
+      }
+      const first = ranked[0];
+      const alternatives = ranked.slice(1,6);
+      return res.status(200).json({success:true,data:{...first,alternatives,location_matched:first.location_matched,review_url:reviewUrl(first.place_id)}});
     } catch (error) {
       unavailable = true;
       lastDetail = error && error.name === 'TimeoutError' ? 'Przekroczono czas oczekiwania na bazę miejsc.' : 'Nie udało się połączyć z bazą miejsc.';
