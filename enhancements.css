@@ -471,3 +471,50 @@ button.dl-button {
 .google-lookup-input{display:block;width:100%;min-height:44px;margin:0 0 10px;padding:11px 13px;border:1px solid #dfe3e9;border-radius:10px;background:#fff;color:#222936;font:500 13px/1.4 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;box-shadow:inset 0 1px 2px rgba(20,30,50,.03)}
 .google-lookup-input::placeholder{color:#929aa7}
 .google-lookup-input:focus{outline:3px solid rgba(36,94,234,.13);border-color:#7e9de9}
+
+
+/* Hero accent: a vivid but restrained blue gradient on "Twojej" */
+.hero h1 span{
+  position:relative;
+  display:inline-block;
+  color:transparent !important;
+  background:linear-gradient(105deg,#8eb8ff 0%,#4d86f7 24%,#245fe5 48%,#77a8ff 72%,#3e78ec 100%);
+  background-size:230% 100%;
+  background-position:0% 50%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  filter:drop-shadow(0 9px 22px rgba(53,111,231,.16));
+  animation:hero-blue-flow 6s ease-in-out infinite alternate,hero-blue-arrive .95s cubic-bezier(.2,.8,.2,1) both;
+}
+.hero h1 span:after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:8%;right:8%;bottom:4%;
+  height:24%;
+  border-radius:50%;
+  background:rgba(54,111,232,.2);
+  filter:blur(22px);
+  opacity:.7;
+  pointer-events:none;
+}
+@keyframes hero-blue-flow{from{background-position:0% 50%}to{background-position:100% 50%}}
+@keyframes hero-blue-arrive{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Distinguish the booking QR from the black review QR, while keeping both scannable */
+.art-card-back{
+  background:linear-gradient(150deg,#fff 0%,#f5f8ff 100%);
+  border-color:#dce7fb;
+  box-shadow:0 28px 65px -40px rgba(40,91,185,.34),inset 0 1px 0 #fff;
+}
+.art-card-back .art-mini,
+.art-card-back .art-caption{color:#4775c7}
+.art-card-back .art-pattern{
+  border:1px solid #e1eaff;
+  box-shadow:0 12px 28px rgba(43,100,202,.1);
+}
+.art-card-back .art-pattern svg{filter:drop-shadow(0 1px 0 rgba(30,78,165,.06))}
+.art-card-front .art-pattern svg{filter:drop-shadow(0 1px 0 rgba(15,20,30,.04))}
+@media(prefers-reduced-motion:reduce){
+ .hero h1 span{animation:none;background-position:50% 50%}
+}
