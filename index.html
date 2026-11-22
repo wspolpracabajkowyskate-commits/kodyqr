@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator kodów QR</title>
+<title>Darmowy generator kodów QR – PNG, JPG i SVG | KodyQR</title>
+<meta name="description" content="Twórz darmowe kody QR do stron, Booksy i opinii Google. Ustaw kolory, korekcję błędów i logo. Pobierz PNG, JPG lub SVG bez rejestracji.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://kodyqr-progames1.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Darmowy generator kodów QR | KodyQR">
+<meta property="og:description" content="Generuj kody QR do stron, Booksy i opinii Google. Dopasuj wygląd i pobierz plik.">
+<meta property="og:url" content="https://kodyqr-progames1.vercel.app/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"KodyQR – generator kodów QR","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"pl","description":"Darmowy generator statycznych kodów QR do stron, Booksy i opinii Google z eksportem PNG, JPG i SVG.","offers":{"@type":"Offer","price":"0","priceCurrency":"PLN"}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:light;--bg:#ffffff;--alt:#f5f5f7;--card:#ffffff;--ink:#1d1d1f;--txt:#1d1d1f;--mut:#6e6e73;--line:#d2d2d7;--soft:#f5f5f7;--blue:#0071e3;--blueH:#0077ed;--link:#0066cc;--yel:#fff8e6;--yelT:#8a5a00;--grn:#eef8f0;--grnT:#1d7a3a;--red:#ffecec;--redT:#b3261e}
@@ -91,10 +100,10 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
 <link rel="stylesheet" href="/enhancements.css">
 </head>
 <body>
-<nav class="nav">
+<nav class="nav" aria-label="Nawigacja główna">
   <div class="nav-inner">
-    <a class="brand" href="#" aria-label="Kody QR — strona główna"><span class="brand-mark">⌁</span><span>Kody<span class="brand-light">QR</span></span></a>
-    <div class="nav-links"><a href="#generator">Generator</a><a href="#jak-dziala">Jak to działa</a><a href="#historia">Historia</a></div>
+    <a class="brand" href="/" aria-label="KodyQR — strona główna"><span class="brand-mark">⌁</span><span>Kody<span class="brand-light">QR</span></span></a>
+    <div class="nav-links"><a href="#generator">Generator</a><a href="#opcje">Dodatkowe opcje</a><a href="#jak-dziala">Jak to działa</a><a href="#historia">Historia</a></div>
     <a class="nav-cta" href="#generator">Utwórz kod <span>↗</span></a>
   </div>
 </nav>
@@ -141,8 +150,31 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
         <div class="field field-last">
           <label class="t" for="name">Dodaj podpis <span class="optional">OPCJONALNIE</span></label>
           <input id="name" type="text" maxlength="60" placeholder="np. Umów wizytę online">
-          <div class="hint">Podpis pojawi się w nazwie pobranego pliku i podglądzie.</div>
+          <div class="hint">Podpis pojawi się pod kodem i w nazwie pliku.</div>
         </div>
+        <section class="advanced-options" id="opcje" aria-labelledby="advanced-title">
+          <button class="advanced-toggle" type="button" id="advancedToggle" aria-expanded="false" aria-controls="advancedBody">
+            <span><b id="advanced-title">Dodatkowe opcje</b><small>Dopasuj wygląd i jakość kodu</small></span><span class="advanced-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="advanced-body" id="advancedBody" hidden>
+            <div class="advanced-field">
+              <label for="ecc">Korekcja błędów</label>
+              <select id="ecc"><option value="L">Niska · 7%</option><option value="M" selected>Średnia · 15%</option><option value="Q">Wysoka · 25%</option><option value="H">Najwyższa · 30%</option></select>
+              <p>Wyższa korekcja zwiększa odporność na zabrudzenia, ale kod staje się bardziej złożony.</p>
+            </div>
+            <div class="advanced-colors">
+              <div class="advanced-field"><label for="fg">Kolor kodu</label><div class="color-control"><input id="fg" type="color" value="#15191f"><span id="fgValue">#15191F</span></div></div>
+              <div class="advanced-field"><label for="qrbg">Kolor tła</label><div class="color-control"><input id="qrbg" type="color" value="#ffffff"><span id="qrbgValue">#FFFFFF</span></div></div>
+            </div>
+            <div class="advanced-field">
+              <label for="customLogo">Dodaj własne logo <span class="optional">OPCJONALNIE</span></label>
+              <input id="customLogo" class="file-input" type="file" accept="image/png,image/jpeg,image/webp">
+              <p>Najlepiej użyj prostego logo PNG z przezroczystym tłem. Korekcja błędów zostanie ustawiona na najwyższą.</p>
+              <button type="button" class="clear-logo" id="clearLogo" hidden>Usuń logo</button>
+            </div>
+            <div class="advanced-note"><b>Statystyki i edycja linku</b><p>Ten generator tworzy statyczne kody, które nie wymagają abonamentu ani naszego serwera. Statystyki skanów i zmiana adresu po wydruku wymagają kodu dynamicznego oraz zaplecza serwerowego — nie włączamy ich pozornie w kodzie statycznym.</p></div>
+          </div>
+        </section>
       </section>
       <aside class="card" aria-label="Podgląd i pobieranie kodu">
         <div class="preview-head"><div><span class="step-number">02</span><span class="panel-overline">TWÓJ KOD QR</span></div><span class="preview-live"><i></i> GOTOWY</span></div>
@@ -171,7 +203,7 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
       </aside>
     </div>
   </section>
-  <section class="trust-strip"><div><b>01</b><span>Bez abonamentu</span></div><div><b>02</b><span>Bez przekierowań</span></div><div><b>03</b><span>Pliki do druku</span></div><div><b>04</b><span>Bez rejestracji</span></div></section>
+  <section class="trust-strip" aria-label="Zalety generatora"><div><b>01</b><span>Bez abonamentu</span></div><div><b>02</b><span>Bez przekierowań</span></div><div><b>03</b><span>Pliki do druku</span></div><div><b>04</b><span>Bez rejestracji</span></div></section>
   <section class="qr-story" id="jak-dziala">
     <div class="qr-story-inner">
       <div class="story-intro"><p class="section-kicker">JAK TO DZIAŁA</p><h2>Od adresu<br>do gotowego kodu.</h2><p>Wklej adres, sprawdź podgląd i pobierz plik w wybranym formacie.</p></div>
@@ -180,7 +212,7 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
         <article class="qr-feature"><div class="qr-feature-icon">∞</div><span class="feature-index">02</span><h3>Bez daty ważności</h3><p>Statyczny kod QR nie wygasa i nie wymaga abonamentu. Działa, dopóki aktywny jest zapisany w nim adres.</p></article>
         <article class="qr-feature"><div class="qr-feature-icon">▧</div><span class="feature-index">03</span><h3>Gotowy do druku</h3><p>Pobierz PNG, JPG lub SVG. Wybierz wysoką rozdzielczość albo wektor, który możesz skalować.</p></article>
       </div>
-      <div class="qr-faq"><div class="faq-heading"><p class="section-kicker">DOBRZE WIEDZIEĆ</p><h2>Masz pytania?<br>Mamy odpowiedzi.</h2></div>
+      <div class="qr-faq"><div class="faq-heading"><p class="section-kicker">DOBRZE WIEDZIEĆ</p><h2>Generator kodów QR — pytania i odpowiedzi</h2></div>
         <details><summary>Czy kod QR naprawdę nie wygasa?</summary><p>Sam statyczny kod QR nie ma daty ważności i nie wymaga naszego serwera. Będzie działał tak długo, jak urządzenie odczyta kod, a zapisany w nim adres nadal będzie aktywny. Jeśli zmieni się lub wygaśnie strona docelowa, kod nadal zeskanuje się poprawnie, ale nie otworzy już właściwej treści.</p></details>
         <details><summary>Czy mogę zmienić adres po wydrukowaniu kodu?</summary><p>Nie. W statycznym kodzie adres jest zapisany bezpośrednio w jego strukturze. Po zmianie adresu trzeba wygenerować i wydrukować nowy kod.</p></details>
         <details><summary>Czy historia kodów jest dostępna na każdym urządzeniu?</summary><p>Nie. Historia jest zapisywana lokalnie w pamięci tej przeglądarki. Nie synchronizuje się automatycznie między urządzeniami.</p></details>
