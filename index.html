@@ -442,7 +442,7 @@ function renderNote(r) {
   box.innerHTML = `<div class="note"><h3>Znajdź bezpośredni link do opinii</h3>
     <p>Wklejony adres prowadzi do profilu Google. Spróbuję rozpoznać firmę i znaleźć jej identyfikator miejsca, a następnie przygotować link otwierający formularz opinii.</p>
     <button type="button" class="btn acc" id="resolveGoogleProfile">Znajdź profil i link do opinii</button>
-    <p class="hint">Wyszukiwanie korzysta z zewnętrznej usługi ZnajdzPlaceID. Przekazany zostanie wyłącznie wklejony adres lub nazwa miejsca.</p>
+    <p class="hint">Wyszukiwanie korzysta z zewnętrznej bazy miejsc. Przekazany zostanie wyłącznie wklejony adres lub nazwa miejsca.</p>
     <details class="review-help"><summary>Wolisz użyć oficjalnego linku Google?</summary><p>W panelu firmy wybierz „Opinie” → „Poproś o opinie” i skopiuj wygenerowany link. Możesz też wkleić identyfikator Place ID.</p><a href="${official}" target="_blank" rel="noopener">Instrukcja Google</a> · <a href="${PF}" target="_blank" rel="noopener">Wyszukiwarka Place ID</a></details>
     <div id="googleLookupStatus" role="status" aria-live="polite"></div>
     <button type="button" class="btn ghost" id="forceBtn">${forceProfile ? 'Ukryj kod do wizytówki' : 'Zrób kod prowadzący do wizytówki'}</button></div>`;
@@ -451,7 +451,7 @@ function renderNote(r) {
     btn.disabled = true; btn.textContent = 'Szukam profilu…';
     status.textContent = 'Sprawdzam adres w katalogu miejsc Google.';
     try {
-      const endpoint = 'https://znajdzplaceid.pl/api/search?query=' + encodeURIComponent(r.raw.trim());
+      const endpoint = '/api/google-place?q=' + encodeURIComponent(r.raw.trim());
       const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error('Usługa wyszukiwania zwróciła błąd (' + response.status + ').');
       const payload = await response.json();
