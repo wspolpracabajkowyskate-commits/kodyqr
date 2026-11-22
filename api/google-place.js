@@ -1,68 +1,86 @@
-// Resolve a Google Maps URL or business name to a Google Place ID.
+// Resolve a Google Maps URL, place name, CID or Place ID.
+// Endpoint and response fields follow the published ZnajdzPlaceID API v2 docs.
 module.exports = async function handler(req, res) {
-  res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
+  res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ success: false, error: { message: 'Method not allowed' } });
   }
+
   const query = typeof req.query.q === 'string' ? req.query.q.trim() : '';
   if (!query || query.length > 2048) {
-    return res.status(400).json({ success: false, error: { message: 'Wklej link do wizytówki Google lub nazwę firmy.' } });
+    return res.status(400).json({ success: false, error: { code: 'INVALID_QUERY', message: 'Wklej link do wizytówki Google albo nazwę firmy i miasto.' } });
   }
 
-  // API v2 documents /all?url= as the universal resolver for URLs, names,
-  // CIDs and Place IDs. /search?query= is retained as a fallback.
-  const attempts = [
-    { path: '/api/all', param: 'url' },
-    { path: '/api/', param: 'url', endpoint: 'all' },
-    { path: '/api/search', param: 'query' },
-    { path: '/api/', param: 'query', endpoint: 'search' }
+  // /search explicitly accepts names, Google Maps URLs, CIDs and Place IDs.
+  // /all is the documented universal resolver and is used as a fallback.
+  const endpoints = [
+    { path: '/api/search', key: 'query' },
+    { path: '/api/all', key: 'url' }
   ];
-  let unavailable = false;
-  for (const attempt of attempts) {
+  let lastMessage = '';
+  let serviceUnavailable = false;
+
+  for (const item of endpoints) {
     try {
-      const endpoint = new URL(attempt.path, 'https://znajdzplaceid.pl');
-      if (attempt.endpoint) endpoint.searchParams.set('endpoint', attempt.endpoint);
-      endpoint.searchParams.set(attempt.param, query);
-      const response = await fetch(endpoint, {
-        headers: { Accept: 'application/json', 'User-Agent': 'KodyQR/1.2' },
-        signal: AbortSignal.timeout(9000)
+      const url = new URL(item.path, 'https://znajdzplaceid.pl');
+      url.searchParams.set(item.key, query);
+      const response = await fetch(url, {
+        headers: { Accept: 'application/json', 'User-Agent': 'KodyQR/1.3' },
+        redirect: 'follow',
+        signal: AbortSignal.timeout(12000)
       });
+
+      let payload = null;
+      try { payload = await response.json(); } catch (_) {}
       if (!response.ok) {
-        if (response.status === 429 || response.status >= 500) unavailable = true;
+        const message = payload && payload.error && payload.error.message;
+        lastMessage = message || ('Lookup returned HTTP ' + response.status);
+        if (response.status === 429 || response.status >= 500) serviceUnavailable = true;
+        // 400 is documented as "no match" for /search. Try /all before deciding.
         continue;
       }
-      const payload = await response.json();
+
       const data = payload && payload.data;
-      const details = data && (data.details || data);
-      const placeId = data && (data.place_id || data.placeId || (data.details && data.details.place_id));
-      if (payload && payload.success && placeId) {
-        return res.status(200).json({
-          success: true,
-          data: {
-            place_id: placeId,
-            name: (details && (details.name || details.nazwa_wizytowki)) || data.name || '',
-            address: (details && (details.address || details.adres)) || data.address || '',
-            alternatives: Array.isArray(data.alternatives) ? data.alternatives : []
-          }
-        });
-      }
-      if (payload && payload.success === false && payload.error && /nie znaleziono|not found/i.test(payload.error.message || '')) {
-        // Try other endpoint variants; only return not-found if all complete.
+      if (!payload || !payload.success || !data) {
+        lastMessage = (payload && payload.error && payload.error.message) || 'The lookup service returned no place data.';
         continue;
       }
-    } catch (_) {
-      unavailable = true;
+
+      const placeId = data.place_id || data.placeId || (data.details && data.details.place_id);
+      if (!placeId) {
+        lastMessage = 'The lookup service found a result but did not return a Place ID.';
+        continue;
+      }
+      const details = data.details || {};
+      return res.status(200).json({
+        success: true,
+        data: {
+          place_id: placeId,
+          name: data.name || details.name || details.nazwa_wizytowki || '',
+          address: data.address || details.address || details.adres || '',
+          alternatives: Array.isArray(data.alternatives) ? data.alternatives : [],
+          source: data.type || data.source || ''
+        }
+      });
+    } catch (error) {
+      serviceUnavailable = true;
+      lastMessage = error && error.name === 'TimeoutError'
+        ? 'Przekroczono czas oczekiwania na bazę miejsc.'
+        : 'Nie udało się połączyć z bazą miejsc.';
     }
   }
-  return res.status(unavailable ? 503 : 404).json({
+
+  const notFound = !serviceUnavailable;
+  return res.status(notFound ? 404 : 503).json({
     success: false,
     error: {
-      code: unavailable ? 'PLACE_LOOKUP_UNAVAILABLE' : 'PLACE_NOT_FOUND',
-      message: unavailable
-        ? 'Baza miejsc Google jest chwilowo niedostępna. Spróbuj ponownie albo użyj oficjalnego linku Google.'
-        : 'Nie znaleziono wizytówki. Wklej pełny link z Google Maps albo nazwę firmy i miasto.'
+      code: notFound ? 'PLACE_NOT_FOUND' : 'PLACE_LOOKUP_UNAVAILABLE',
+      message: notFound
+        ? 'Nie znaleziono jednoznacznej wizytówki dla podanego adresu. Spróbuj wpisać nazwę firmy wraz z miastem.'
+        : 'Zewnętrzna baza miejsc jest chwilowo niedostępna. Spróbuj ponownie za chwilę.',
+      detail: lastMessage
     }
   });
 };
