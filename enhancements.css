@@ -782,3 +782,5 @@ button.dl-button {
  .generator-section .card{padding:18px 14px}
  .generator-section .dl .btn{font-size:11px!important}
 }
+
+@media(max-width:760px){.generator-section .panel{order:0!important}.generator-section .card{order:1!important}}
