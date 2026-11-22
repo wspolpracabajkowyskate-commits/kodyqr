@@ -155,7 +155,7 @@ module.exports = async function handler(req, res) {
         lastDetail = payload && payload.error && payload.error.message || 'Resolver did not return a Place ID.';
         continue;
       }
-      const requestedName = clean(query).split(',')[0].replace(/^https?:\\/\\//i,'').trim();
+      const requestedName = clean(query).split(',')[0].replace(/^https?:\/\//i,'').trim();
       const ignored = new Set(['firma','company','salon','sklep','restauracja','restaurant','hotel','gabinet','uslugi','usługi','the','google','maps']);
       const nameTokens = normalizeText(requestedName).split(/[^a-z0-9]+/).filter(t=>t.length>1 && !ignored.has(t));
       const city = requestedCity(query);
