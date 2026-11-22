@@ -518,3 +518,33 @@ button.dl-button {
 @media(prefers-reduced-motion:reduce){
  .hero h1 span{animation:none;background-position:50% 50%}
 }
+
+
+/* Headline sizing and glyph safety: keep the full word visible inside the copy column */
+.hero-copy,
+.hero h1{
+  min-width:0;
+  overflow:visible !important;
+}
+.hero h1{
+  max-width:620px;
+  font-size:clamp(50px,6.05vw,78px) !important;
+  line-height:1.04 !important;
+  letter-spacing:-.068em !important;
+  padding-right:.12em;
+  margin-right:-.12em;
+}
+.hero h1 span{
+  display:inline-block;
+  max-width:100%;
+  padding-right:.14em;
+  margin-right:-.14em;
+  overflow:visible !important;
+  white-space:nowrap;
+}
+@media(max-width:900px){
+ .hero h1{font-size:clamp(48px,7.2vw,70px)!important;max-width:100%}
+}
+@media(max-width:700px){
+ .hero h1{font-size:clamp(48px,11.5vw,68px)!important;line-height:1.04!important}
+}
