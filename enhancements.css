@@ -274,3 +274,34 @@ select{min-height:39px;padding:5px 9px;border:1px solid #e8ebf1;border-radius:10
 .use-cases-grid h3{margin:0 0 9px;color:#293241;font-size:15px;font-weight:650;letter-spacing:-.03em}
 .use-cases-grid p{margin:0;color:#788291;font-size:12px;line-height:1.7}
 @media(max-width:700px){.use-cases{padding:58px 19px}.use-cases-grid{grid-template-columns:1fr}.use-cases-grid article{padding:20px}}
+
+
+/* Export buttons: force readable typography across browser defaults */
+.dl .btn,
+.dl .btn span,
+button.dl-button {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: .015em !important;
+  color: #263244 !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+.dl .btn.acc,
+.dl .btn.acc span {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.dl .btn:disabled,
+.dl .btn:disabled span {
+  color: #667184 !important;
+  -webkit-text-fill-color: #667184 !important;
+  opacity: .62 !important;
+}
+.dl .btn span { margin-left: 6px; font-size: 15px !important; }
+@media(max-width:420px){
+  .dl .btn,.dl .btn span{font-size:12px!important}
+}
