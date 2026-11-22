@@ -643,3 +643,20 @@ button.dl-button {
  .generator-heading h1{font-size:36px}
  .generator-heading .section-description{margin-top:10px;font-size:14px}
 }
+
+
+/* Remove the oversized gap directly below the navigation. */
+.generator-section{
+  padding-top:14px !important;
+}
+.generator-heading{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+.generator-heading .section-kicker{
+  margin-top:0 !important;
+  margin-bottom:7px !important;
+}
+@media(max-width:700px){
+  .generator-section{padding-top:12px !important}
+}
