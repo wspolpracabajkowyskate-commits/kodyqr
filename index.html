@@ -469,8 +469,20 @@ function renderNote(r) {
   const official = 'https://support.google.com/business/answer/16816815?hl=pl';
   if (resolvedGooglePlace) {
     const p = resolvedGooglePlace;
-    box.innerHTML = `<div class="note"><h3>Znaleziony profil</h3><p><b>${esc(p.name || 'Profil Google')}</b><br>${esc(p.address || '')}</p><p>Sprawdź, czy to właściwa firma. Dopiero po potwierdzeniu utworzę link do formularza opinii.</p><button type="button" class="btn acc" id="useGooglePlace">Użyj tego profilu</button> <button type="button" class="btn ghost" id="retryGoogleLookup">Szukaj ponownie</button></div>`;
-    $('#useGooglePlace').onclick = () => { $('#url').value = p.place_id; resolvedGooglePlace = null; forceProfile = false; mode = 'google'; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === 'google'))); update(); };
+    const candidates = [p, ...(Array.isArray(p.alternatives) ? p.alternatives : [])].filter(x => x && x.place_id);
+    box.innerHTML = `<div class="note"><h3>Znaleziony profil</h3>
+      ${candidates.length > 1 ? `<label class="google-lookup-label" for="googlePlaceChoice">Wybierz właściwą lokalizację</label><select id="googlePlaceChoice">${candidates.map((x,i)=>`<option value="${i}">${esc((x.name || 'Profil Google') + (x.address ? ' · ' + x.address : ''))}</option>`).join('')}</select>` : ''}
+      <p><b id="googlePlaceName">${esc(p.name || 'Profil Google')}</b><br><span id="googlePlaceAddress">${esc(p.address || '')}</span></p>
+      ${p.location_matched === false ? '<p><b>Uwaga:</b> wynik może pochodzić z innego miasta. Wybierz właściwy adres przed zatwierdzeniem.</p>' : ''}
+      <p>Sprawdź nazwę i adres. Dopiero po potwierdzeniu utworzę link do formularza opinii.</p>
+      <button type="button" class="btn acc" id="useGooglePlace">Użyj tego profilu</button> <button type="button" class="btn ghost" id="retryGoogleLookup">Szukaj ponownie</button></div>`;
+    let selected = p;
+    $('#googlePlaceChoice')?.addEventListener('change', event => {
+      selected = candidates[Number(event.target.value)] || p;
+      $('#googlePlaceName').textContent = selected.name || 'Profil Google';
+      $('#googlePlaceAddress').textContent = selected.address || '';
+    });
+    $('#useGooglePlace').onclick = () => { $('#url').value = selected.review_url || ('https://search.google.com/local/writereview?placeid=' + selected.place_id); resolvedGooglePlace = null; forceProfile = false; mode = 'google'; document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === 'google'))); update(); };
     $('#retryGoogleLookup').onclick = () => { resolvedGooglePlace = null; renderNote(r); };
     return;
   }
@@ -492,11 +504,11 @@ function renderNote(r) {
     try {
       const endpoint = '/api/google-place?q=' + encodeURIComponent(lookupQuery);
       const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('Usługa wyszukiwania zwróciła błąd (' + response.status + ').');
-      const payload = await response.json();
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error((payload.error && payload.error.message) || (response.status === 404 ? 'Nie znaleziono takiej wizytówki. Dopisz miasto i kraj albo wklej link „Poproś o opinie”.' : 'Wyszukiwanie jest chwilowo niedostępne. Spróbuj ponownie lub użyj Place ID.'));
       const d = payload && payload.data;
-      if (!payload.success || !d || !d.place_id) throw new Error((payload.error && payload.error.message) || 'Nie znaleziono jednoznacznego profilu.');
-      resolvedGooglePlace = { place_id: d.place_id, name: d.name || '', address: d.address || '', alternatives: d.alternatives || [] };
+      if (!payload.success || !d || (!d.place_id && !d.review_url)) throw new Error((payload.error && payload.error.message) || 'Nie znaleziono jednoznacznego profilu.');
+      resolvedGooglePlace = { place_id: d.place_id || '', review_url: d.review_url || '', name: d.name || '', address: d.address || '', location_matched: d.location_matched, alternatives: d.alternatives || [] };
       renderNote(r);
     } catch (error) {
       status.textContent = (error && error.message ? error.message : 'Nie udało się znaleźć profilu.') + ' Spróbuj wpisać nazwę firmy i miasto. Możesz też wkleić oficjalny link „Poproś o opinie” albo Place ID.';
