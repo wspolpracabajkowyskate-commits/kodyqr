@@ -260,3 +260,5 @@ select{min-height:39px;padding:5px 9px;border:1px solid #e8ebf1;border-radius:10
 .advanced-note b{font-size:11px;color:#394352}
 .advanced-note p{margin:6px 0 0;color:#7e8794;font-size:10px;line-height:1.6}
 @keyframes advanced-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+@media(max-width:600px){.nav .nav-links a[href="#jak-dziala"]{display:none}.nav .nav-links{gap:12px}}
