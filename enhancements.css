@@ -660,3 +660,125 @@ button.dl-button {
 @media(max-width:700px){
   .generator-section{padding-top:12px !important}
 }
+
+
+/* Final responsive consistency pass: aligned brand and no clipped mobile content */
+.nav{height:62px!important}
+.nav>.nav-inner{
+  min-height:62px;
+  align-items:center!important;
+}
+.nav .brand{
+  display:flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  font-size:18px!important;
+  line-height:1!important;
+  letter-spacing:-.055em!important;
+}
+.nav .brand-mark{
+  flex:0 0 36px!important;
+  width:36px!important;
+  height:36px!important;
+  margin:0!important;
+  align-self:center!important;
+  border-radius:11px!important;
+}
+.nav .brand>span:last-child{
+  display:inline-flex;
+  align-items:baseline;
+  line-height:1!important;
+  white-space:nowrap;
+}
+.nav .brand-qr{width:22px!important;height:22px!important}
+.generator-section{
+  padding:22px 24px 58px!important;
+  min-width:0;
+}
+.generator-section>.section-heading,
+.generator-section>.grid{
+  width:min(1120px,100%)!important;
+  max-width:100%;
+  min-width:0;
+}
+.generator-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin:0 auto 24px!important;
+}
+.generator-heading>div{min-width:0}
+.generator-heading h1{
+  max-width:100%;
+  font-size:clamp(32px,4vw,48px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.055em!important;
+  overflow-wrap:anywhere;
+}
+.generator-heading .section-description{
+  max-width:390px;
+  margin:0 0 3px;
+}
+.generator-section .grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(320px,.82fr);
+  gap:18px;
+  align-items:stretch;
+}
+.generator-section .panel,
+.generator-section .card{
+  min-width:0;
+  width:100%;
+}
+.generator-section .panel{padding:30px}
+.generator-section .card{padding:24px}
+.generator-section .label{width:100%;max-width:340px}
+.generator-section .input-wrap,
+.generator-section .input-wrap input,
+.generator-section .field,
+.generator-section .seg{min-width:0;max-width:100%}
+.generator-section input[type=text],
+.generator-section input[type=url]{width:100%;min-width:0;max-width:100%}
+.generator-section .seg button{min-width:0;overflow-wrap:anywhere}
+.generator-section .dl{grid-template-columns:repeat(3,minmax(0,1fr))}
+.generator-section .dl .btn{min-width:0;white-space:nowrap}
+@media(max-width:760px){
+ .nav{height:58px!important}
+ .nav>.nav-inner{width:calc(100% - 28px)!important;min-height:58px;gap:10px!important}
+ .nav .brand{font-size:17px!important;gap:8px!important}
+ .nav .brand-mark{flex-basis:34px!important;width:34px!important;height:34px!important}
+ .nav .brand-qr{width:21px!important;height:21px!important}
+ .nav .nav-links{gap:10px!important;margin-left:auto!important}
+ .nav .nav-links a:not([href="#generator"]){display:none!important}
+ .nav .nav-links a[href="#generator"]{font-size:12px!important;font-weight:650!important}
+ .nav .nav-inner>.nav-cta{display:none!important}
+ .generator-section{padding:18px 16px 42px!important}
+ .generator-heading{display:block!important;margin-bottom:18px!important}
+ .generator-heading h1{font-size:clamp(29px,7vw,42px)!important;line-height:1.08!important}
+ .generator-heading .section-description{max-width:54ch;margin:9px 0 0;font-size:13px;line-height:1.55}
+ .generator-section .grid{grid-template-columns:minmax(0,1fr)!important;gap:14px}
+ .generator-section .card{order:0}
+ .generator-section .panel{order:1;padding:22px 18px}
+ .generator-section .card{padding:20px 18px}
+ .generator-section .panel-topline,.generator-section .preview-head{gap:9px;margin-bottom:22px}
+ .generator-section .label{max-width:100%;padding:14px}
+ .generator-section .seg{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .generator-section .seg button{font-size:12px;padding:9px 6px}
+ .generator-section .size{grid-template-columns:48px minmax(0,1fr);gap:8px 10px}
+ .generator-section .size label:nth-of-type(2){grid-column:1}
+ .generator-section .dl{gap:7px}
+ .generator-section .dl .btn{padding:8px 5px;font-size:12px!important}
+ .generator-section .preview-tools{gap:8px}
+}
+@media(max-width:380px){
+ .nav>.nav-inner{width:calc(100% - 22px)!important}
+ .nav .brand{font-size:16px!important;gap:7px!important}
+ .nav .brand-mark{flex-basis:32px!important;width:32px!important;height:32px!important}
+ .nav .nav-links a[href="#generator"]{font-size:11px!important}
+ .generator-section{padding-left:12px!important;padding-right:12px!important}
+ .generator-heading h1{font-size:29px!important}
+ .generator-section .panel{padding:19px 15px}
+ .generator-section .card{padding:18px 14px}
+ .generator-section .dl .btn{font-size:11px!important}
+}
