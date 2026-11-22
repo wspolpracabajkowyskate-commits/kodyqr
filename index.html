@@ -494,18 +494,22 @@ function renderNote(r) {
     return;
   }
   box.innerHTML = `<div class="note"><h3>Znajdź bezpośredni link do opinii</h3>
-    <p>Wklejony adres prowadzi do profilu Google. Spróbuję rozpoznać firmę i znaleźć jej identyfikator miejsca, a następnie przygotować link otwierający formularz opinii.</p>
+    <p>Najpierw spróbuję rozpoznać wizytówkę z wklejonego linku. Jeśli Google nie zwróci jednoznacznego wyniku, wpisz nazwę firmy i miasto.</p>
+    <label class="google-lookup-label" for="googleLookupQuery">Link lub nazwa firmy</label>
+    <input id="googleLookupQuery" class="google-lookup-input" type="text" value="${esc(r.raw.trim())}" maxlength="2048" autocomplete="off" placeholder="Nazwa firmy, miasto lub link Google Maps">
     <button type="button" class="btn acc" id="resolveGoogleProfile">Znajdź profil i link do opinii</button>
-    <p class="hint">Wyszukiwanie korzysta z zewnętrznej bazy miejsc. Przekazany zostanie wyłącznie wklejony adres lub nazwa miejsca.</p>
+    <p class="hint">Po znalezieniu pokażę nazwę i adres. Sam wybierzesz, czy to właściwa firma.</p>
     <details class="review-help"><summary>Wolisz użyć oficjalnego linku Google?</summary><p>W panelu firmy wybierz „Opinie” → „Poproś o opinie” i skopiuj wygenerowany link. Możesz też wkleić identyfikator Place ID.</p><a href="${official}" target="_blank" rel="noopener">Instrukcja Google</a> · <a href="${PF}" target="_blank" rel="noopener">Wyszukiwarka Place ID</a></details>
     <div id="googleLookupStatus" role="status" aria-live="polite"></div>
     <button type="button" class="btn ghost" id="forceBtn">${forceProfile ? 'Ukryj kod do wizytówki' : 'Zrób kod prowadzący do wizytówki'}</button></div>`;
   $('#resolveGoogleProfile').onclick = async () => {
     const btn = $('#resolveGoogleProfile'), status = $('#googleLookupStatus');
+    const lookupQuery = ($('#googleLookupQuery') && $('#googleLookupQuery').value.trim()) || r.raw.trim();
+    if (!lookupQuery) { status.textContent = 'Wpisz link do wizytówki albo nazwę firmy i miasto.'; return; }
     btn.disabled = true; btn.textContent = 'Szukam profilu…';
-    status.textContent = 'Sprawdzam adres w katalogu miejsc Google.';
+    status.textContent = 'Sprawdzam wizytówkę w bazie miejsc Google.';
     try {
-      const endpoint = '/api/google-place?q=' + encodeURIComponent(r.raw.trim());
+      const endpoint = '/api/google-place?q=' + encodeURIComponent(lookupQuery);
       const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error('Usługa wyszukiwania zwróciła błąd (' + response.status + ').');
       const payload = await response.json();
@@ -514,7 +518,7 @@ function renderNote(r) {
       resolvedGooglePlace = { place_id: d.place_id, name: d.name || '', address: d.address || '', alternatives: d.alternatives || [] };
       renderNote(r);
     } catch (error) {
-      status.textContent = 'Nie udało się automatycznie znaleźć profilu. ' + (error && error.message ? error.message : 'Sprawdź połączenie i spróbuj ponownie.') + ' Możesz wkleić oficjalny link „Poproś o opinie” albo Place ID.';
+      status.textContent = (error && error.message ? error.message : 'Nie udało się znaleźć profilu.') + ' Spróbuj wpisać nazwę firmy i miasto. Możesz też wkleić oficjalny link „Poproś o opinie” albo Place ID.';
       btn.disabled = false; btn.textContent = 'Spróbuj ponownie';
     }
   };
