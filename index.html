@@ -539,13 +539,14 @@ function svgString(b, forFile) {
     } else {
       const k = Math.min(box / LOGO_W, box / LOGO_H);
       const tx = x + p + (box - LOGO_W * k) / 2, ty = x + p + (box - LOGO_H * k) / 2;
-      logoPart = `<rect x="${x}" y="${x}" width="${s}" height="${s}" fill="#fff"/><path fill="#111" fill-rule="evenodd" shape-rendering="geometricPrecision" transform="translate(${tx.toFixed(3)} ${ty.toFixed(3)}) scale(${k.toFixed(5)})" d="${LOGO_D}"/>`;
+      logoPart = `<rect x="${x}" y="${x}" width="${s}" height="${s}" fill="#fff" stroke="none"/><path fill="#000000" stroke="none" fill-rule="evenodd" shape-rendering="geometricPrecision" transform="translate(${tx.toFixed(3)} ${ty.toFixed(3)}) scale(${k.toFixed(5)})" d="${LOGO_D}"/>`;
     }
   }
   const noBg = $('#bg').value === 'none';
   if (noBg) logoPart = logoPart.replace(/<rect[^>]*fill="#fff"\/>/, '');
   const head = forFile ? `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"` : `<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kod QR"`;
-  return `${head} viewBox="0 0 ${b.N} ${b.N}" shape-rendering="crispEdges"> ${noBg ? '' : `<rect width="${b.N}" height="${b.N}" fill="${b.bg}"/>`}<path fill="${b.fg}" d="${d}"/>${logoPart}</svg>`;
+  const qrFill = b.fg.toLowerCase() === "#000000" ? "#000000" : b.fg;
+  return `${head} viewBox="0 0 ${b.N} ${b.N}" shape-rendering="crispEdges"> ${noBg ? '' : `<rect x="0" y="0" width="${b.N}" height="${b.N}" fill="${b.bg}" stroke="none"/>`}<path fill="${qrFill}" stroke="none" d="${d}"/>${logoPart}</svg>`;
 }
 
 function rasterBlob(b, px, type) {
@@ -567,7 +568,7 @@ function rasterBlob(b, px, type) {
     } else {
       const k = Math.min(box / LOGO_W, box / LOGO_H);
       g.save(); g.translate(o+p+(box-LOGO_W*k)/2, o+p+(box-LOGO_H*k)/2); g.scale(k,k);
-      g.fillStyle = '#111'; g.fill(new Path2D(LOGO_D), 'evenodd'); g.restore();
+      g.fillStyle = '#000000'; g.fill(new Path2D(LOGO_D), 'evenodd'); g.restore();
     }
   }
   return new Promise(res => c.toBlob(res, type, 0.95));
