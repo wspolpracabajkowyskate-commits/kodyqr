@@ -795,36 +795,11 @@ button.dl-button {
 }
 
 
-/* Animate the actual frame line with a moving color highlight. */
+/* Classic, high-contrast static QR preview frame. */
 .generator-section .label{
   position:relative!important;
-  isolation:isolate;
   border:2px solid #8eafeF!important;
   background:#fff!important;
-  box-shadow:0 8px 28px -24px rgba(35,91,190,.35)!important;
+  box-shadow:0 0 0 1px rgba(71,123,234,.10),0 8px 28px -24px rgba(35,91,190,.35)!important;
 }
-.generator-section .label::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  z-index:2;
-  padding:2px;
-  border-radius:inherit;
-  pointer-events:none;
-  background:conic-gradient(from var(--qr-frame-angle,0deg),#477bea 0deg,#dce8ff 55deg,#ffffff 95deg,#477bea 145deg,#9dbcf8 220deg,#477bea 300deg);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  animation:qr-frame-rotate 3.6s linear infinite!important;
-}
-@keyframes qr-frame-rotate{
-  to{--qr-frame-angle:360deg}
-}
-@property --qr-frame-angle{
-  syntax:"<angle>";
-  inherits:false;
-  initial-value:0deg;
-}
-@media(prefers-reduced-motion:reduce){
-  .generator-section .label::before{animation:none!important}
-}
+.generator-section .label::before{content:none!important;display:none!important}
