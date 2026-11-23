@@ -144,7 +144,7 @@ select{font:inherit;font-size:15px;min-height:42px;border-radius:12px;border:0;b
               <p>Wyższa korekcja zwiększa odporność na zabrudzenia, ale kod staje się bardziej złożony.</p>
             </div>
             <div class="advanced-colors">
-              <div class="advanced-field"><label for="fg">Kolor kodu</label><div class="color-control"><input id="fg" type="color" value="#15191f"><span id="fgValue">#15191F</span></div></div>
+              <div class="advanced-field"><label for="fg">Kolor kodu</label><div class="color-control"><input id="fg" type="color" value="#000000"><span id="fgValue">#000000</span></div></div>
               <div class="advanced-field"><label for="qrbg">Kolor tła</label><div class="color-control"><input id="qrbg" type="color" value="#ffffff"><span id="qrbgValue">#FFFFFF</span></div></div>
             </div>
             <div class="advanced-field">
@@ -525,7 +525,7 @@ function build(text, withLogo) {
   let L = 0, a = 0;
   if (withLogo) { L = Math.round(n * 0.26); if ((n - L) % 2) L++; a = (n - L) / 2; }
   const inHole = (x, y) => withLogo && x >= a && x < a + L && y >= a && y < a + L;
-  return { qr, n, q, N, L, a, inHole, withLogo, ecc, fg: $('#fg') ? $('#fg').value : '#15191f', bg: $('#qrbg') ? $('#qrbg').value : '#ffffff' };
+  return { qr, n, q, N, L, a, inHole, withLogo, ecc, fg: $('#fg') ? $('#fg').value.toLowerCase() : '#000000', bg: $('#qrbg') ? $('#qrbg').value : '#ffffff' };
 }
 
 function svgString(b, forFile) {
