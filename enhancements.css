@@ -795,22 +795,36 @@ button.dl-button {
 }
 
 
-/* Animate the border itself, not a separate glow or streak around it. */
+/* Animate the actual frame line with a moving color highlight. */
 .generator-section .label{
   position:relative!important;
-  border:2px solid transparent!important;
-  background:
-    linear-gradient(#fff,#fff) padding-box,
-    linear-gradient(120deg,#6f9df1,#eaf1ff,#477bea,#c8dcff,#6f9df1) border-box!important;
-  background-size:100% 100%,300% 300%!important;
-  background-position:0 0,200% 50%!important;
+  isolation:isolate;
+  border:2px solid #8eafeF!important;
+  background:#fff!important;
   box-shadow:0 8px 28px -24px rgba(35,91,190,.35)!important;
-  animation:qr-border-flow 5s ease-in-out infinite!important;
 }
-@keyframes qr-border-flow{
-  0%,100%{background-position:0 0,200% 50%}
-  50%{background-position:0 0,-100% 50%}
+.generator-section .label::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  z-index:2;
+  padding:2px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:conic-gradient(from var(--qr-frame-angle,0deg),#477bea 0deg,#dce8ff 55deg,#ffffff 95deg,#477bea 145deg,#9dbcf8 220deg,#477bea 300deg);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:qr-frame-rotate 3.6s linear infinite!important;
+}
+@keyframes qr-frame-rotate{
+  to{--qr-frame-angle:360deg}
+}
+@property --qr-frame-angle{
+  syntax:"<angle>";
+  inherits:false;
+  initial-value:0deg;
 }
 @media(prefers-reduced-motion:reduce){
-  .generator-section .label{animation:none!important}
+  .generator-section .label::before{animation:none!important}
 }
