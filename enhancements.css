@@ -793,3 +793,32 @@ button.dl-button {
   line-height:1.25!important;
   text-align:center;
 }
+
+
+/* A clearer, premium outline with a restrained moving highlight. */
+.generator-section .label{
+  position:relative!important;
+  border:2px solid #9bb9f3!important;
+  box-shadow:0 0 0 3px rgba(65,119,225,.07),0 12px 34px -25px rgba(35,91,190,.38)!important;
+}
+.generator-section .label::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-45%;
+  width:38%;
+  height:2px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.98),transparent);
+  filter:drop-shadow(0 0 3px rgba(74,132,245,.55));
+  animation:qr-border-glint 4.8s ease-in-out infinite;
+}
+@keyframes qr-border-glint{
+  0%,18%{left:-45%;opacity:0}
+  28%{opacity:1}
+  62%{left:108%;opacity:.9}
+  72%,100%{left:108%;opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .generator-section .label::after{animation:none;display:none}
+}
